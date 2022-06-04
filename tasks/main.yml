@@ -12,7 +12,7 @@
   template:
     src: docker-compose.yml.j2
     dest: /opt/docker-compose-service/loki/docker-compose.yml
-  notify: Restart prometheus
+  notify: Restart loki
 
 - name: Put local-config.yml
   template:
