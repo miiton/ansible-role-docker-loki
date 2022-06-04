@@ -26,3 +26,58 @@
     enabled: yes
     state: started
     daemon_reload: yes
+
+- name: Check caddy conf
+  uri:
+    url: http://localhost:2019/id/{{ grafana_host }}/
+    method: GET
+    headers:
+      Content-Type: application/json
+      Origin: http://localhost:2019
+    status_code:
+      - 200
+      - 404
+
+- name: Delete caddy conf
+  uri:
+    url: http://localhost:2019/id/{{ grafana_host }}/
+    method: DELETE
+    headers:
+      Content-Type: application/json
+      Origin: http://localhost:2019
+    status_code:
+      - 200
+      - 404
+
+- name: Update caddy
+  uri:
+    url: http://localhost:2019/config/apps/http/servers/{{ caddy_servername }}/routes/
+    method: POST
+    headers:
+      Content-Type: application/json
+      Origin: http://localhost:2019
+    return_content: yes
+    status_code: 200
+    body_format: json
+    body: |
+      {
+        "@id": "{{ grafana_host }}",
+        "match": [
+          {
+            "host": [
+              "{{ grafana_host }}"
+            ]
+          }
+        ],
+        "handle": [
+          {
+            "handler": "reverse_proxy",
+            "upstreams": [
+              {
+                "dial": "grafana:3000"
+              }
+            ]
+          }
+        ],
+        "terminal": true
+      }
