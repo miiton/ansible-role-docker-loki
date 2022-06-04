@@ -1,0 +1,28 @@
+---
+- name: Create directories
+  file:
+    state: directory
+    path: "{{ item }}"
+    mode: 0755
+  with_items:
+    - /etc/loki
+    - /opt/docker-compose-service/loki
+
+- name: Put docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/docker-compose-service/loki/docker-compose.yml
+  notify: Restart prometheus
+
+- name: Put local-config.yml
+  template:
+    src: local-config.yml.j2
+    dest: /etc/loki/local-config.yml
+  notify: Restart loki
+
+- name: Start loki
+  systemd:
+    name: docker-compose-service@loki
+    enabled: yes
+    state: started
+    daemon_reload: yes

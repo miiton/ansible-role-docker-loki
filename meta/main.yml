@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  author: miiton
+  description: Loki
+  company: "miiton"
+  license: "MIT"
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+  galaxy_tags:
+    - system
+    - security
+    - logging
+
+allow_duplicates: false
+dependencies:
+  - name: docker-caddy
+    src: git+git@github.com:miiton/ansible-role-docker-caddy2.git
+    version: main

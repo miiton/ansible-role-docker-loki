@@ -1,0 +1,7 @@
+---
+- name: Restart loki
+  systemd:
+    name: docker-compose-service@loki
+    enabled: yes
+    state: restarted
+    daemon_reload: yes
