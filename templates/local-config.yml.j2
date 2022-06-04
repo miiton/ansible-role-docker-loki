@@ -23,7 +23,7 @@ storage_config:
   {% if loki_store == "gcs" %}
     shared_store: gcs
   gcs:
-    bucket_name: {{ bucket_name }}
+    bucket_name: {{ loki_store_bucket_name }}
   {% elif loki_store == "s3" %}
     shared_store: s3
   aws:
