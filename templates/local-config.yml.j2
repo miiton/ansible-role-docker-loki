@@ -20,27 +20,27 @@ storage_config:
     active_index_directory: /loki/boltdb-shipper-active
     cache_location: /loki/boltdb-shipper-cache
     cache_ttl: 24h
-    {% if loki_store == "gcs" -%}
+{% if loki_store == "gcs" %}
     shared_store: gcs
   gcs:
     bucket_name: {{ loki_store_bucket_name }}
-    {% elif loki_store == "s3" -%}
+{% elif loki_store == "s3" %}
     shared_store: s3
   aws:
     s3: {{ loki_store_s3_region }}
     bucketnames: 
       - {{ loki_store_bucket_name }}
-    {% endif %}
+{% endif %}
 
 schema_config:
   configs:
     - from: 2020-10-24
       store: boltdb-shipper
-      {% if loki_store == "gcs" -%}
+{% if loki_store == "gcs" %}
       object_store: gcs
-      {% elif loki_store == "s3" -%}
+{% elif loki_store == "s3" %}
       object_store: s3
-      {%- endif -%}
+{% endif %}
       schema: v11
       index:
         prefix: index_

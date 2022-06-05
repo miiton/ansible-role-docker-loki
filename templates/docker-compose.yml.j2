@@ -7,12 +7,24 @@ services:
       - /etc/loki/local-config.yml:/etc/loki/local-config.yml
       - loki:/loki
       - loki-tmp:/tmp
+{% if loki_unuse_iam and loki_store == "gcs" %}
+      - /etc/loki/credentials.json:/credentials.json
+{% endif %}
     ports:
       - 3100
     command: -config.file=/etc/loki/local-config.yml
     networks:
       - default
       - proxy
+{% if loki_unuse_iam %}
+    environment:
+{%   if loki_store == "gcs" %}
+      GOOGLE_APPLICATION_CREDENTIALS: /credentials.json
+{%   elif loki_store == "s3" %}
+      AWS_ACCESS_KEY: {{ lookup('env', 'AWS_ACCESS_KEY') }}
+      AWS_SECRET_ACCESS_KEY:  {{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}
+{%   endif %}
+{% endif %}
 
 networks:
   proxy:
