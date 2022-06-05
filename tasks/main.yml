@@ -71,10 +71,56 @@
         ],
         "handle": [
           {
-            "handler": "reverse_proxy",
-            "upstreams": [
+            "handler": "subroute",
+            "routes": [
               {
-                "dial": "loki:3100"
+                "match": [
+                  {
+                    "header": {
+                      "X-Scope-OrgID": [{{ loki_org_ids }}]
+                    },
+                    "path": [
+                      "/*"
+                    ]
+                  }
+                ],
+                "handle": [
+                  {
+                    "handler": "reverse_proxy",
+                    "upstreams": [
+                      {
+                        "dial": "loki:3100"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "match": [
+                  {
+                    "header": {
+                      "X-Scope-OrgID": ["*"]
+                    },
+                    "path": [
+                      "/*"
+                    ]
+                  },
+                  {
+                    "header": {
+                      "X-Scope-OrgID": null
+                    },
+                    "path": [
+                      "/*"
+                    ]
+                  }
+                ],
+                "handle": [
+                  {
+                    "handler": "static_response",
+                    "status_code": "400",
+                    "body": ":)"
+                  }
+                ]
               }
             ]
           }
