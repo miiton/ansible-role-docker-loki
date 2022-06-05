@@ -16,6 +16,7 @@ services:
     networks:
       - default
       - proxy
+      - prometheus-network
 {% if loki_unuse_iam %}
     environment:
 {%   if loki_store == "gcs" %}
@@ -28,6 +29,8 @@ services:
 
 networks:
   proxy:
+    external: true
+  prometheus-network:
     external: true
 
 volumes:
