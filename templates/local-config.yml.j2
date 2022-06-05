@@ -27,9 +27,8 @@ storage_config:
 {% elif loki_store == "s3" %}
     shared_store: s3
   aws:
-    s3: {{ loki_store_s3_region }}
-    bucketnames: 
-      - {{ loki_store_bucket_name }}
+    s3: s3://{{ loki_store_s3_region }}
+    bucketnames: {{ loki_store_bucket_name }}
 {% endif %}
 
 schema_config:
