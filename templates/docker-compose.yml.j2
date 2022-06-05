@@ -12,7 +12,7 @@ services:
 {% endif %}
     ports:
       - 3100
-    command: -config.file=/etc/loki/local-config.yml
+    command: -config.file=/etc/loki/config.yml
     networks:
       - default
       - proxy
@@ -26,6 +26,15 @@ services:
       AWS_SECRET_ACCESS_KEY:  {{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}
 {%   endif %}
 {% endif %}
+  promtail:
+    image: grafana/promtail
+    container_name: promtail
+    volumes:
+      - /var/log:/var/log
+      - /etc/promtail/config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - default
 
 networks:
   proxy:

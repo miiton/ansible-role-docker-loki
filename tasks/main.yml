@@ -6,6 +6,7 @@
     mode: 0755
   with_items:
     - /etc/loki
+    - /etc/promtail
     - /opt/docker-compose-service/loki
 
 - name: Put docker-compose.yml
@@ -14,10 +15,16 @@
     dest: /opt/docker-compose-service/loki/docker-compose.yml
   notify: Restart loki
 
-- name: Put local-config.yml
+- name: Put loki-config.yml
   template:
-    src: local-config.yml.j2
-    dest: /etc/loki/local-config.yml
+    src: loki-config.yml.j2
+    dest: /etc/loki/config.yml
+  notify: Restart loki
+
+- name: Put promtail-config.yml
+  template:
+    src: promtail-config.yml.j2
+    dest: /etc/promtail/config.yml
   notify: Restart loki
 
 - name: Start loki
