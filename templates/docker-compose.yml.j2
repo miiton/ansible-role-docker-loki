@@ -8,3 +8,10 @@ services:
     ports:
       - 3100
     command: -config.file=/etc/loki/local-config.yml
+    networks:
+      - default
+      - proxy
+
+networks:
+  proxy:
+    external: true
