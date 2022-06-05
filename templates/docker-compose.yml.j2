@@ -5,6 +5,8 @@ services:
     container_name: loki
     volumes:
       - /etc/loki/local-config.yml:/etc/loki/local-config.yml
+      - loki:/loki
+      - loki-tmp:/tmp
     ports:
       - 3100
     command: -config.file=/etc/loki/local-config.yml
@@ -15,3 +17,7 @@ services:
 networks:
   proxy:
     external: true
+
+volumes:
+  loki:
+  loki-tmp:
