@@ -3,6 +3,10 @@ services:
   loki:
     image: grafana/loki
     container_name: loki
+    logging:
+      options:
+        max-size: "10k"
+        max-file: "5"
     volumes:
       - /etc/loki/config.yml:/etc/loki/config.yml
       - loki:/loki
@@ -29,6 +33,10 @@ services:
   promtail:
     image: grafana/promtail
     container_name: promtail
+    logging:
+      options:
+        max-size: "10k"
+        max-file: "5"
     volumes:
       - /var/log:/var/log
       - /etc/promtail/config.yml:/etc/promtail/config.yml
