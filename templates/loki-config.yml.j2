@@ -47,3 +47,10 @@ schema_config:
 
 ruler:
   alertmanager_url: http://localhost:9093
+  
+# https://github.com/grafana/loki/issues/4613#issuecomment-1045993131  
+query_scheduler:
+  max_outstanding_requests_per_tenant: 2048
+query_range:
+  parallelise_shardable_queries: false
+  split_queries_by_interval: 0
