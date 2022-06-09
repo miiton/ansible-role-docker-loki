@@ -54,3 +54,7 @@ query_scheduler:
 query_range:
   parallelise_shardable_queries: false
   split_queries_by_interval: 0
+
+# https://github.com/grafana/loki/issues/4509
+limits_config:
+  max_query_length: 0
