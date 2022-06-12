@@ -3,7 +3,7 @@ services:
   loki:
     image: grafana/loki
     container_name: loki
-    logging:
+logging:
       options:
         max-size: "10k"
         max-file: "5"
@@ -18,9 +18,12 @@ services:
       - 3100
     command: -config.file=/etc/loki/config.yml
     networks:
-      - default
-      - proxy
-      - prometheus-network
+      default:
+      proxy:
+      prometheus-network:
+        aliases:
+          - {{ loki_host }}
+
 {% if loki_unuse_iam %}
     environment:
 {%   if loki_store == "gcs" %}
