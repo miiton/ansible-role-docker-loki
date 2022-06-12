@@ -3,7 +3,7 @@ services:
   loki:
     image: grafana/loki
     container_name: loki
-logging:
+    logging:
       options:
         max-size: "10k"
         max-file: "5"
