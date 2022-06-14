@@ -9,10 +9,19 @@
     - /etc/promtail
     - /opt/docker-compose-service/loki
 
+- name: Put GCP credentials.json
+  copy:
+    src: credentials.json
+    dest: /etc/loki/credentials.json
+    mode: 0600
+  notify: Restart loki
+  when: loki_unuse_iam == true and loki_store == "gcs"
+
 - name: Put docker-compose.yml
   template:
     src: docker-compose.yml.j2
     dest: /opt/docker-compose-service/loki/docker-compose.yml
+    mode: 0700
   notify: Restart loki
 
 - name: Put loki-config.yml
