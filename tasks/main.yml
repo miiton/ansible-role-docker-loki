@@ -13,7 +13,7 @@
   copy:
     src: credentials.json
     dest: /etc/loki/credentials.json
-    mode: 0600
+    mode: 0644
   notify: Restart loki
   when: loki_unuse_iam == true and loki_store == "gcs"
 
@@ -21,7 +21,7 @@
   template:
     src: docker-compose.yml.j2
     dest: /opt/docker-compose-service/loki/docker-compose.yml
-    mode: 0700
+    mode: 0644
   notify: Restart loki
 
 - name: Put loki-config.yml
