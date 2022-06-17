@@ -13,3 +13,9 @@ scrape_configs:
     labels:
       job: varlogs
       __path__: /var/log/syslog
+  - targets:
+      - localhost
+    labels:
+      job: varlogs
+      role: loki
+      __path__: /var/log/docker-compose-service/loki.log
