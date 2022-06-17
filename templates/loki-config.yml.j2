@@ -15,6 +15,16 @@ common:
     kvstore:
       store: inmemory
 
+compactor:
+  working_directory: /tmp/loki/compactor
+  compaction_interval: {{ loki_compaction_interval }}
+  retention_enabled: {{ loki_retention_enabled }}
+  retention_delete_delay: {{ loki_retention_delete_delay }}
+{% if loki_store == "gcs" %}
+  shared_store: gcs
+{% elif loki_store == "s3" %}
+  shared_store: s3
+{% endif %}
 storage_config:
   boltdb_shipper:
     active_index_directory: /loki/boltdb-shipper-active
@@ -58,3 +68,11 @@ query_range:
 # https://github.com/grafana/loki/issues/4509
 limits_config:
   max_query_length: 0
+  retention_period: {{ loki_retention_period }}
+  retention_stream:
+    - selector: '{role="webserver"}'
+      priority: 1
+      period: 2232h
+    - selector: '{role="audit"}'
+      priority: 10
+      period: 44544h
