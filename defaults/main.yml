@@ -1,6 +1,6 @@
 ---
 loki_store_s3_region: ap-northeast-3
-loki_compaction_interval: 1h
+loki_compaction_interval: 10m
 loki_retention_enabled: true
-loki_retention_delete_delay: 24h
-loki_retention_period: 43800h # (5years)
+loki_retention_delete_delay: 2h
+loki_retention_period: 5y
