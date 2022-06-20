@@ -11,4 +11,8 @@ loki_host: loki.example.com
 loki_store: gcs # or s3
 loki_store_s3_region: ap-northeast-3
 loki_store_bucket_name: hogehoge
+loki_chunk_idle_period: 30m
+loki_chunk_target_size: 1572864
+loki_chunk_encoding: gzip
+loki_max_chunk_age: 2h
 ```
