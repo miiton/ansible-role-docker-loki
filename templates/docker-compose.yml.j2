@@ -3,6 +3,7 @@ services:
   loki:
     image: grafana/loki
     container_name: loki
+    restart: unless-stopped
     logging:
       options:
         max-size: "10k"
@@ -36,6 +37,7 @@ services:
   promtail:
     image: grafana/promtail
     container_name: promtail
+    restart: unless-stopped
     logging:
       options:
         max-size: "10k"

@@ -4,3 +4,7 @@ loki_compaction_interval: 10m
 loki_retention_enabled: true
 loki_retention_delete_delay: 2h
 loki_retention_period: 5y
+loki_chunk_idle_period: 30m
+loki_chunk_target_size: 1572864
+loki_chunk_encoding: gzip
+loki_max_chunk_age: 2h

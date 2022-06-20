@@ -76,3 +76,9 @@ limits_config:
     - selector: '{role="audit"}'
       priority: 10
       period: 5y
+      
+ingester:
+  chunk_idle_period: {{ loki_chunk_idle_period }}
+  chunk_target_size: {{ loki_chunk_target_size }}
+  chunk_encoding: {{ loki_chunk_encoding }}
+  max_chunk_age: {{ loki_max_chunk_age }}
